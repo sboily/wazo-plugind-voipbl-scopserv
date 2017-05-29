@@ -20,6 +20,7 @@ case "$1" in
     uninstall)
         # check you have the same name on the script voipbl
         /sbin/iptables -F voipbl-blacklist
+        /sbin/iptables -D INPUT -j voipbl-blacklist
         /sbin/iptables -X voipbl-blacklist
         systemctl restart fail2ban
         ;;
