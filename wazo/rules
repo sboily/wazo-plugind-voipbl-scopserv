@@ -10,9 +10,11 @@ case "$1" in
         ;;
 
     install)
+        systemctl restart fail2ban
         ;;
 
     uninstall)
+        systemctl restart fail2ban
         ;;
 
     *)
