@@ -7,6 +7,8 @@ case "$1" in
         ;;
 
     package)
+        cp -R etc ${pkgdir}/
+        cp -R usr ${pkgdir}/
         ;;
 
     install)
