@@ -13,9 +13,14 @@ case "$1" in
 
     install)
         systemctl restart fail2ban
+        # populate blacklist the first time
+        /usr/local/bin/voipbl
         ;;
 
     uninstall)
+        # check you have the same name on the script voipbl
+        /sbin/iptables -F voipbl-blacklist
+        /sbin/iptables -X voipbl-blacklist
         systemctl restart fail2ban
         ;;
 
