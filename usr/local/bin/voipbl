@@ -1,14 +1,12 @@
 #!/bin/bash
 
 # Check if chain exists and create one if required
-NAMED_CHAIN = 'voipbl-blacklist'
-
-if [ `iptables -L | grep -c "Chain $NAMED_CHAIN"` -lt 1 ]; then
-  /sbin/iptables -N $NAMED_CHAIN
-  /sbin/iptables -I INPUT 1 -j $NAMED_CHAIN
+if [ `iptables -L | grep -c "Chain voipbl-blacklist"` -lt 1 ]; then
+  /sbin/iptables -N voipbl-blacklist
+  /sbin/iptables -I INPUT 1 -j voipbl-blacklist
 fi
 	
 # Empty the chain
-/sbin/iptables -F $NAMED_CHAIN
+/sbin/iptables -F voipbl-blacklist
 wget -qO - http://www.voipbl.org/update/ |\
-  awk '{print "if [ ! -z \""$1"\" -a \""$1"\" !=  \"#\" ]; then /sbin/iptables -A $NAMED_CHAIN -s \""$1"\" -j DROP;fi;"}' | sh
+  awk '{print "if [ ! -z \""$1"\" -a \""$1"\" !=  \"#\" ]; then /sbin/iptables -A voipbl-blacklist -s \""$1"\" -j DROP;fi;"}' | sh
